@@ -1,7 +1,7 @@
 <?php
 
 $rawcsv = file_get_contents('http://data.gov.ru/opendata/7708660670-proizvcalendar/data-20161107T1038-structure-20161107T1038.csv?encoding=UTF-8');
-$csvlines = preg_replace('/^([0-9]{4}),/', '"${1}",', split("\n", str_replace("\r", "", $rawcsv)));
+$csvlines = preg_replace('/^([0-9]{4}),/', '"${1}",', explode("\n", str_replace("\r", "", $rawcsv)));
 $dayMap = array();
 
 foreach ($csvlines as $csvline) {
@@ -18,7 +18,7 @@ foreach ($csvlines as $csvline) {
 			break;
 		}
 		$month = sprintf('%02d', $_month);
-		$days = split(",", $daysraw);
+		$days = explode(",", $daysraw);
 
 		// Filling the month by workdays
 		$days_in_month = @cal_days_in_month(CAL_GREGORIAN, (int)$_month, (int)$year);
